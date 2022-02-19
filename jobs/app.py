@@ -84,3 +84,41 @@ def review(employer_id):
         
         return redirect(url_for("employer", employer_id=employer_id))
     return render_template("review.html", employer_id=employer_id)
+
+@app.route("/job_post", methods=("POST", "GET"))
+def job_post():
+    if request.method == "POST":
+        employer_name = request.form["employer_name"]
+        title = request.form["title"]
+        salary = request.form["salary"]
+        description = request.form["description"]
+        job_id = new_job_id()
+        employer_id = new_employer_id(employer_name)
+
+        execute_sql(
+            "INSERT INTO job (employer_name, title, salary, description) VALUES (?, ?, ?, ?)",
+            (employer_name, title, salary, description),
+            commit=True
+        )
+        return redirect("/")
+    return render_template("job_post.html")
+
+
+def new_employer_id(employer_name):
+    query_result = execute_sql("SELECT DISTINCT employer_id, name FROM job JOIN employer ON employer.id = job.employer_id")
+    query_dict = {val[-1]: val[0] for val in query_result}
+    for key in query_dict:
+        if key == employer_name:
+            return query_dict[key]
+    return max(query_dict.values()) + 1
+
+def new_job_id():
+    query_result = execute_sql("SELECT MAX(id) FROM job")
+    return query_result[0][0] + 1
+
+def get_rows(query_result):
+    return [val[0] for val in query_result]
+
+
+if __name__ == "__main__":
+    new_employer_id()
