@@ -5,14 +5,11 @@ def main():
     PATH="db/jobs.sqlite"
     connection = sqlite3.connect(PATH)
     cursor = connection.cursor()
-    employer_name = "Sharp Group"
-    cursor.execute("SELECT MAX(id) FROM job")
+    cursor.execute("DELETE FROM job WHERE id = 14")
     result = cursor.fetchall()
+    connection.commit()
+    cursor.close()
     print(result)
-
-
-def get_rows(query_result):
-    return [val[0] for val in query_result]
 
 if __name__ == "__main__":
     main()

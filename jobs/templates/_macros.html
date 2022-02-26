@@ -4,6 +4,10 @@
       <p class="card-header-title">
         <a href="{{ url_for('job', job_id=job['id']) }}">{{ job['title'] }}</a>
       </p>
+      <p class="card-header-title">
+        <a href="{{ url_for('delete_post', job_id=job['id']) }}" class="button is-info is-pulled-right">Delete Post</a>
+      </p>
+      
     </header>
     <div class="card-content">
       <div class="content">

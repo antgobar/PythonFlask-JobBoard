@@ -7,12 +7,18 @@
     <div class="column is-one-fifth">
     </div>
   </div>
+
   <div class="columns">
-  <div class="column">
-    <a href="{{ url_for('job_post') }}" class="button is-info is-pulled-right">
-        Post Job
-    </a>
-  </div>
+    <div class="column">
+      <a href="{{ url_for('register_employer') }}" class="button is-info is-pulled-left">
+          Register Employer
+      </a>
+    </div>
+    <div class="column">
+      <a href="{{ url_for('job_post') }}" class="button is-info is-pulled-right">
+          Post Job
+      </a>
+    </div>
   </div>
   {{ show_jobs(jobs) }}
 {% endblock %}
